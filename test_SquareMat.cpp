@@ -1,3 +1,5 @@
+//anksilae@gmail.com
+
 // ==============================
 //  SquareMat – unified test file
 //  Uses doctest (single‑header)

@@ -1,29 +1,31 @@
-	.PHONY: all Main test clean valgrind
+##anksilae@gmail.com
 
-	CXX = g++
-	CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -g
+.PHONY: all Main test clean valgrind
 
-	all: Main test
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -g
 
-	main_exec: main.cpp SquareMat.cpp
-		$(CXX) $(CXXFLAGS) -o main main.cpp SquareMat.cpp
+all: Main test
 
-	test_runner_exec: test_SquareMat.cpp SquareMat.cpp
-		$(CXX) $(CXXFLAGS) -o test_runner test_SquareMat.cpp SquareMat.cpp
+main_exec: main.cpp SquareMat.cpp
+	$(CXX) $(CXXFLAGS) -o main main.cpp SquareMat.cpp
 
-	Main: main_exec
-		@echo "========== Running Main =========="
-		./main
+test_runner_exec: test_SquareMat.cpp SquareMat.cpp
+	$(CXX) $(CXXFLAGS) -o test_runner test_SquareMat.cpp SquareMat.cpp
 
-	test: test_runner_exec
-		@echo "========== Running Tests =========="
-		./test_runner
+Main: main_exec
+	@echo "========== Running Main =========="
+	./main
 
-	clean:
-		rm -f main test_runner *.o
+test: test_runner_exec
+	@echo "========== Running Tests =========="
+	./test_runner
 
-	valgrind: main_exec test_runner_exec
-		@echo "========== Valgrind Main =========="
-		valgrind ./main
-		@echo "========== Valgrind Test =========="
-		valgrind ./test_runner
+clean:
+	rm -f main test_runner *.o
+
+valgrind: main_exec test_runner_exec
+	@echo "========== Valgrind Main =========="
+	valgrind ./main
+	@echo "========== Valgrind Test =========="
+	valgrind ./test_runner
