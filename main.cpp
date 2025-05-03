@@ -11,16 +11,15 @@
 
         int size = 3;
         cout << "Creating a 3x3 array (arr) with sequential values." << endl;
-        double** arr = new double*[size];
+        SquareMat mat1(size);
         for (int i = 0; i < size; ++i) {
-            arr[i] = new double[size];
             for (int j = 0; j < size; ++j) {
-                arr[i][j] = i * size + j + 1;
+                mat1[i][j] = i * size + j + 1;
             }
         }
 
-        cout << "\nInitializing mat1 with arr." << endl;
-        SquareMat mat1(size, arr);
+   
+    
 
         cout << "\nInitializing mat2 with scalar value 5 (mat2)." << endl;
         SquareMat mat2(size, 5);
@@ -129,12 +128,6 @@
 
         mat3 %= 5;
         cout << "After mat3 %= 5:" << endl << mat3 << endl;
-
-        cout << "=== Cleaning up dynamically allocated array ===" << endl;
-        for (int i = 0; i < size; ++i) {
-            delete[] arr[i];
-        }
-        delete[] arr;
 
         cout << "=== Demonstration Completed ===" << endl;
 

@@ -1,7 +1,7 @@
 //anksilae@gmail.com
 
 // ==============================
-//  SquareMat – unified test file
+//  SquareMat - unified test file
 //  Uses doctest (single‑header)
 // ==============================
 
@@ -16,24 +16,11 @@ using namespace matrix;
 // =========================================================
 //  Constructors & basic validation
 // =========================================================
-TEST_CASE("Constructor – valid & invalid inputs") {
-    SUBCASE("scalar ctor – illegal size (0)") {
+TEST_CASE("Constructor - valid & invalid inputs") {
+    SUBCASE("scalar ctor - illegal size (0)") {
         CHECK_THROWS_AS(SquareMat(0, 1.0), std::invalid_argument);
     }
-    SUBCASE("array ctor – nullptr row / nullptr matrix ptr") {
-        // nullptr as whole matrix pointer
-        CHECK_THROWS_AS(SquareMat(3, nullptr), std::invalid_argument);
-
-        // single nullptr row
-        int n = 2;
-        double **bad = new double *[n];
-        bad[0] = new double[n]{1, 2};
-        bad[1] = nullptr;
-        CHECK_THROWS_AS(SquareMat(n, bad), std::invalid_argument);
-        delete[] bad[0];
-        delete[] bad;
-    }
-    SUBCASE("copy ctor & copy‑assignment") {
+    SUBCASE("copy ctor & copy-assignment") {
         SquareMat m(2, 3.0);
         SquareMat c(m);          // copy‑ctor
         CHECK(c[0][0] == doctest::Approx(3));
@@ -46,7 +33,7 @@ TEST_CASE("Constructor – valid & invalid inputs") {
 // =========================================================
 //  Access operators
 // =========================================================
-TEST_CASE("operator[] – boundaries") {
+TEST_CASE("operator[] - boundaries") {
     SquareMat m(2, 1.0);
     const SquareMat cm(2, 1.0);
 
@@ -133,25 +120,22 @@ TEST_CASE("Comparison & compound‑assignment operators") {
 // =========================================================
 TEST_CASE("Determinant & transpose") {
     SUBCASE("determinant ±1") {
-        int n = 2;
-        double **arr = new double *[n];
-        arr[0] = new double[n]{0, 1};
-        arr[1] = new double[n]{1, 0};
-        SquareMat m(n, arr);
+        SquareMat m(2);
+        m[0][0] = 0;
+        m[0][1] = 1;
+        m[1][0] = 1;
+        m[1][1] = 0;
         CHECK((!m) == doctest::Approx(-1));
-        for(int i=0;i<n;++i) delete[] arr[i];
-        delete[] arr;
     }
 
     SUBCASE("determinant 0 (singular)") {
-        int n = 2;
-        double **arr = new double *[n];
-        arr[0] = new double[n]{1, 2};
-        arr[1] = new double[n]{0, 0};
-        SquareMat m(n, arr);
+        SquareMat m(2);
+        m[0][0] = 1;
+        m[0][1] = 2;
+        m[1][0] = 0;
+        m[1][1] = 0;
         CHECK((!m) == doctest::Approx(0));
-        for(int i=0;i<n;++i) delete[] arr[i];
-        delete[] arr;
+   
     }
 
     SUBCASE("transpose operator ~") {
@@ -173,3 +157,4 @@ TEST_CASE("operator<< & assign scalar") {
     oss << m;
     CHECK(oss.str().find("3") != std::string::npos);
 }
+

@@ -4,7 +4,7 @@
 This project implements a `SquareMat` class inside the `matrix` namespace.  
 The class represents a dynamic **square matrix** of `double` elements and supports a wide range of operations, including:
 
-- Constructors (from 2D array, scalar value, and copy constructor)
+- Constructors (0 default/ scalar value/ deep copy constructor)
 - Element access (`operator[]`)
 - Full arithmetic support: `+`, `-`, `*`, `/`, `%`, `^` (as defined in the assignment)
 - Unary operations: `-`, `~`, `++`, `--` (as defined in the assignment)
@@ -17,6 +17,24 @@ The class represents a dynamic **square matrix** of `double` elements and suppor
 
 ---
 
+### Constructors
+
+The `SquareMat` class includes several constructors to initialize a square matrix in different ways:
+
+- `SquareMat(int size)`  
+  Constructs a `size x size` matrix with all elements initialized to `0.0`.  
+  Internally calls the scalar constructor with `0.0`.
+
+- `SquareMat(int size, double scalar)`  
+  Constructs a `size x size` matrix with all elements initialized to the given `scalar` value.  
+  Useful for quickly creating zero matrices or identity-like matrices with uniform values.
+
+- `SquareMat(const SquareMat &other)`  
+  Copy constructor. Creates a deep copy of the given matrix, ensuring that the new matrix has its own memory and is independent of the original.
+
+Each constructor performs input validation and memory allocation to ensure the matrix is correctly and safely initialized.
+
+
 ## Project Structure
 
 | File                  | Description                                  |
@@ -25,7 +43,7 @@ The class represents a dynamic **square matrix** of `double` elements and suppor
 | `SquareMat.cpp`        | Source file: class implementation            |
 | `main.cpp`             | Demonstrates usage of all class functions    |
 | `test_SquareMat.cpp`   | Unit tests using doctest                     |
-| `Makefile`             | Automates build, run, test, and clean tasks   |
+| `Makefile`             | Automates build, run, test, and clean tasks  |
 
 ---
 
@@ -42,7 +60,7 @@ The class represents a dynamic **square matrix** of `double` elements and suppor
 |--------------------|-------------------------------------------------------------|
 | `make`             | Builds and runs both the main program and the tests         |
 | `make Main`        | Runs the main program (`main.cpp`)                          |
-| `make test`        | Runs the unit tests (`test_SquareMat.cpp`) using doctest     |
+| `make test`        | Runs the unit tests (`test_SquareMat.cpp`) using doctest    |
 | `make valgrind`    | Runs both executables (`main` and `test_runner`) under Valgrind for memory checking |
 | `make clean`       | Removes compiled executables and object files               |
 
@@ -50,7 +68,7 @@ The class represents a dynamic **square matrix** of `double` elements and suppor
 
 ## How to Run
 
-### To compile and run the main program:
+### To run the main demonstration:
 ```bash
 make Main
 ```
@@ -86,16 +104,7 @@ You will see a detailed report of all passed or failed tests.
 
 ---
 
-## Notes
-
-- Exception safety is enforced for invalid inputs.
-- Deep copies are properly handled.
-- Code is organized clearly with section headers.
-- Full functionality is tested individually.
-- The matrix output format is readable.
-
----
-
 **Author:**  
 Aviv Neeman  
 April 2025
+

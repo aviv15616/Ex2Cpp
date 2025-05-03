@@ -11,32 +11,9 @@ namespace matrix
     // Constructors and Destructor
     //--------------------------------//
 
-    SquareMat::SquareMat(int size, double *const *inputData) : size(size)
-    {
-        if (size < 1 || inputData == nullptr)
-            throw std::invalid_argument("Invalid matrix size or null data.");
-
-        // Allocate memory for the matrix
-        data = new double *[size];
-        for (int i = 0; i < size; ++i)
-        {
-            if (inputData[i] == nullptr)
-            {
-                // Clean up if any row is null
-                for (int j = 0; j < i; ++j)
-                {
-                    delete[] data[j];
-                }
-                delete[] data;
-                throw std::invalid_argument("Invalid row data (null pointer).");
-            }
-            data[i] = new double[size];
-            for (int j = 0; j < size; ++j)
-            {
-                data[i][j] = inputData[i][j];
-            }
-        }
-    }
+    SquareMat::SquareMat(int size)
+    : SquareMat(size, 0.0) // קריאה לבנאי עם סקלר
+{}
 
     SquareMat::SquareMat(int size, double scalar) : size(size)
     {
@@ -56,7 +33,7 @@ namespace matrix
     }
 
     SquareMat::SquareMat(const SquareMat &other) : size(other.size), data(new double *[other.size])
-    {
+    {   
         for (int i = 0; i < size; ++i)
         {
             data[i] = new double[size]; // allocate new row
@@ -164,6 +141,8 @@ namespace matrix
 
     SquareMat SquareMat::operator*(const SquareMat &other) const
     {
+        if (size != other.size) throw std::invalid_argument("Matrix sizes do not match for multiplication");
+
         SquareMat ans(size, 0.0);
 
         for (int i = 0; i < size; ++i)
@@ -200,6 +179,7 @@ namespace matrix
 
     SquareMat SquareMat::operator%(const SquareMat &other) const
     {
+        if (size != other.size) throw std::invalid_argument("Matrix sizes do not match for multiplication");
         SquareMat ans = *this;
         for (int i = 0; i < size; i++)
         {

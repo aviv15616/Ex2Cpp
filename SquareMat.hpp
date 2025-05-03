@@ -19,7 +19,7 @@ public:
 // Constructors and Destructor
 //--------------------------------//
 
-    SquareMat(int size, double* const* inputData);// Constructor from 2D array input
+    SquareMat(int size);// Constructor from 2D array input
     explicit SquareMat(int size, double scalar);// Constructor to initialize all elements to scalar
     SquareMat(const SquareMat& other);        // Copy constructor
     ~SquareMat();                             // Destructor
